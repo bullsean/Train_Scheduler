@@ -13,6 +13,7 @@ var trainName;
 var destination;
 var firstTime;
 var frequency;
+var timeOfDay = moment().format("HH:mm");
 
 $("#submitBtn").on("click", function() {
     event.preventDefault();
@@ -29,7 +30,8 @@ $("#submitBtn").on("click", function() {
         "trainName": trainName,
         "destination": destination,
         "firstTrainTime": firstTime,
-        "frequency": frequency
+        "frequency": frequency,
+        "currentTime": timeOfDay
     })
 })
 
@@ -73,4 +75,6 @@ database.ref().on("child_added", function (childSnapshot) {
     var newTrainAdded = '<tr><th scope="row">'+ databaseTrainName +'</th><td>'+ databaseDestination +'</td><td>'+ databaseFrequency +'</td><td>'+ nextTrainTimeFormatted +'</td><td>'+ minutesUntilNextTrain +'</td></tr>'
 
     $("#tableBody").append(newTrainAdded);
+
+    $("#jumbo").html('<h1 class="display-4">Train Schedule</h1><p class="lead">CURRENT TIME: '+ moment().format("HH:mm") +'</p>')
 })
